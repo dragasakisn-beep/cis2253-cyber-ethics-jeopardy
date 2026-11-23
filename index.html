@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CIS2253 | Cyber Ethics Jeopardy</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5/dist/full.min.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="./style.css"/>
+</head>
+<body><main class="shell">
+<header class="masthead"><div><p class="eyebrow">KEISER UNIVERSITY / CIS2253</p><h1>CYBER ETHICS <span>JEOPARDY</span></h1><p class="sub">Interactive classroom competition · Six categories · 30 ethical decisions</p></div><div class="toolbar"><button class="btn btn-outline btn-sm" id="fullscreen">Full screen</button><button class="btn btn-outline btn-sm" id="reset">Reset game</button></div></header>
+<div class="sectionhead"><h2>TEAM SCOREBOARD</h2><span>Instructor-controlled scoring</span></div>
+<section id="teams" class="teams" aria-label="Team scoreboard"></section>
+<div class="sectionhead"><h2>JEOPARDY BOARD</h2><span>100–500 points per category</span></div>
+<section class="boardframe"><div id="board" class="board"></div></section>
+<div class="sectionhead"><h2>SLACK BUZZER</h2><span class="badge badge-outline" id="status">Offline · Local play ready</span></div>
+<section class="buzzerbox">
+<div class="connection"><input id="endpoint" type="url" class="input input-bordered" placeholder="Backend HTTPS URL"><input id="instructorKey" class="input input-bordered" type="password" autocomplete="off" placeholder="Private instructor key"><button id="connect" class="btn btn-primary">Connect</button></div>
+<div class="toolbar"><button id="sync" class="btn btn-outline btn-sm">Sync teams</button><button id="arm" class="btn btn-outline btn-sm">Arm buzzer</button><button id="close" class="btn btn-outline btn-sm">Close buzzer</button><button id="post" class="btn btn-info btn-sm">Post BUZZ IN button to Slack</button></div>
+<p id="live" class="live">Connect the separate Slack backend to activate live buzzing.</p>
+<p class="hint">Students join a team with /team 1–4, then enter /buzz in Slack. The first server-received buzz wins. The instructor awards points.</p>
+</section>
+<footer>Made by Prof. Nicholas Dragassakis · CIS2253 Cyber Ethics</footer>
+</main>
+<div id="dialog" class="overlay" role="dialog" aria-modal="true" aria-labelledby="question"><div class="questioncard"><div class="eyebrow" id="qmeta"></div><h2 id="question"></h2><div id="clock" class="clock"></div><div id="answer" class="answer" hidden></div><p id="winner" class="live"></p><div class="toolbar actions"><button class="btn btn-outline" id="timer">30s timer</button><button class="btn btn-info" id="reveal">Reveal answer</button><button class="btn btn-success" id="correct">Correct +</button><button class="btn btn-error" id="incorrect">Incorrect −</button><button class="btn btn-ghost" id="skip">Skip</button></div></div></div>
+<script src="./questions.js"></script><script src="./game.js"></script>
+</body></html>
