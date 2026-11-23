@@ -25,16 +25,17 @@ function buzz(id,name,source){
 }
 slack.command('/team',async({command,ack,respond})=>{
   await ack();
+  if(channel&&command.channel_id!==channel)return respond({text:'Use this command in the designated CIS2253 game channel.',response_type:'ephemeral'});
   const i=Number(command.text.trim())-1;
   if(!Number.isInteger(i)||i<0||i>=4)return respond({text:'Use /team 1, /team 2, /team 3, or /team 4.',response_type:'ephemeral'});
   state.users.set(command.user_id,i);
   await respond({text:'Registered for '+state.teams[i]+'. Use /buzz when the instructor opens a question.',response_type:'ephemeral'});
 });
-slack.command('/buzz',async({command,ack,respond})=>{await ack();const r=buzz(command.user_id,command.user_name,'slash');await respond({text:r.message,response_type:'ephemeral'})});
+slack.command('/buzz',async({command,ack,respond})=>{const r=channel&&command.channel_id!==channel?{message:'Use /buzz in the CIS2253 game channel.'}:buzz(command.user_id,command.user_name,'slash');await ack();await respond({text:r.message,response_type:'ephemeral'})});
 slack.action('cis2253_buzz',async({ack,body,respond})=>{
-  await ack();
   const u=body.user||{};
-  const r=buzz(u.id,u.name||u.username||u.id,'button');
+  const r=channel&&body.channel?.id!==channel?{message:'This button is not in the configured game channel.'}:buzz(u.id,u.name||u.username||u.id,'button');
+  await ack();
   if(respond)await respond({text:r.message,response_type:'ephemeral',replace_original:false});
 });
 http.use((req,res,next)=>{
